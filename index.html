@@ -108,22 +108,32 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* Polaroid rotation variety */
-        .tilt-l { transform: rotate(-2.5deg); }
-        .tilt-r { transform: rotate(2deg); }
-        .tilt-l:hover, .tilt-r:hover { transform: rotate(0deg) translateY(-4px); }
-        .flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-
         /* 3D Flip Card Effect */
-        .flip-card { background-color: transparent; perspective: 1200px; position: relative; z-index: 0; }
-        .flip-card:hover, .flip-card.flipped { z-index: 20; }
+        .flip-card {
+            background-color: transparent;
+            perspective: 1200px;
+            position: relative;
+            z-index: 0;
+            transform: rotate(-2.5deg);
+            transition: transform 0.3s ease;
+        }
+        .flip-card.tilt-r { transform: rotate(2deg); }
+        .flip-card:hover { z-index: 20; transform: rotate(0deg) translateY(-4px); }
+        .flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
         .flip-card-inner {
-            position: relative; width: 100%; height: 100%; text-align: center;
-            transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
         }
         .flip-card-front, .flip-card-back {
-            position: absolute; width: 100%; height: 100%;
-            -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 0.25rem;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 0.25rem;
+            overflow: hidden;
         }
         .flip-card-back { transform: rotateY(180deg); }
 
@@ -442,7 +452,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pt-4">
 
                 <!-- Polaroid 1 -->
-                <div class="flip-card h-[420px] w-full tilt-l transition-transform duration-300">
+                <div class="flip-card h-[420px] w-full">
                     <div class="flip-card-inner">
                         <div class="flip-card-front bg-white p-4 pt-6 shadow-xl border border-gold-200/70 flex flex-col justify-between relative">
                             <span class="washi"></span>
@@ -464,7 +474,7 @@
                 </div>
 
                 <!-- Polaroid 2 -->
-                <div class="flip-card h-[420px] w-full tilt-r transition-transform duration-300">
+                <div class="flip-card tilt-r h-[420px] w-full">
                     <div class="flip-card-inner">
                         <div class="flip-card-front bg-white p-4 pt-6 shadow-xl border border-gold-200/70 flex flex-col justify-between relative">
                             <span class="washi"></span>
@@ -485,7 +495,7 @@
                 </div>
 
                 <!-- Polaroid 3 -->
-                <div class="flip-card h-[420px] w-full tilt-l transition-transform duration-300">
+                <div class="flip-card h-[420px] w-full">
                     <div class="flip-card-inner">
                         <div class="flip-card-front bg-white p-4 pt-6 shadow-xl border border-gold-200/70 flex flex-col justify-between relative">
                             <span class="washi"></span>
