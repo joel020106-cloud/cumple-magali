@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Cumpleaños, Magali — Un cuaderno de recuerdos</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: { DEFAULT: '#FAF3E7', deep: '#F1E3D0' },
+                        wine: { 50:'#F7ECEE', 100:'#EDD9DD', 200:'#D9B2BB', 300:'#C1899A', 400:'#9C4F63', 500:'#7A2F47', 600:'#5E2138', 700:'#48192B', 800:'#33101E', 900:'#220A14' },
+                        gold: { 50:'#FBF6EC', 100:'#F3E6C9', 200:'#E4C892', 300:'#D3AC6A', 400:'#B8925A', 500:'#9C7745', 600:'#7D5D37' },
+                        ink: '#3A2A2E'
+                    },
+                    fontFamily: {
+                        display: ['Fraunces', 'serif'],
+                        hand: ['Caveat', 'cursive'],
+                        body: ['Jost', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&family=Caveat:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --paper: #FAF3E7;
+            --paper-deep: #F1E3D0;
+            --wine: #5E2138;
+            --wine-deep: #33101E;
+            --gold: #B8925A;
+            --ink: #3A2A2E;
+        }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            background-color: var(--paper);
+            color: var(--ink);
+            overflow-x: hidden;
+            /* subtle paper grain */
+            background-image:
+                radial-gradient(circle at 1px 1px, rgba(94,33,56,0.055) 1px, transparent 0);
+            background-size: 22px 22px;
+        }
+
+        .font-display { font-family: 'Fraunces', serif; }
+        .font-hand { font-family: 'Caveat', cursive; }
+
+        /* Deckled / torn paper divider between sections */
+        .torn-edge {
+            position: relative;
+            height: 34px;
+            width: 100%;
+            background: repeating-linear-gradient(
+                115deg,
+                var(--paper) 0 14px,
+                transparent 14px 16px
+            );
+            -webkit-mask: repeating-linear-gradient(115deg, #000 0 12px, transparent 12px 20px);
+            mask: repeating-linear-gradient(115deg, #000 0 12px, transparent 12px 20px);
+        }
+
+        .stitch-divider {
+            border-top: 2px dashed rgba(184,146,90,0.55);
+        }
+
+        /* Thread timeline */
+        .thread-line {
+            background-image: linear-gradient(var(--gold) 60%, transparent 0%);
+            background-position: left;
+            background-size: 2px 12px;
+            background-repeat: repeat-y;
+        }
+
+        /* Wax seal marker */
+        .wax-seal {
+            background: radial-gradient(circle at 32% 28%, #a4506a, var(--wine) 65%, var(--wine-deep) 100%);
+            box-shadow: inset 0 -3px 6px rgba(0,0,0,0.35), inset 0 2px 3px rgba(255,255,255,0.25), 0 4px 10px rgba(51,16,30,0.35);
+        }
+
+        /* Ticket-stub stat card */
+        .ticket-stub {
+            position: relative;
+            border: 1.5px dashed rgba(184,146,90,0.6);
+            background: #fffdf8;
+        }
+
+        /* Washi tape */
+        .washi {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            width: 90px;
+            height: 26px;
+            background: repeating-linear-gradient(45deg, rgba(184,146,90,0.55), rgba(184,146,90,0.55) 6px, rgba(230,201,146,0.55) 6px, rgba(230,201,146,0.55) 12px);
+            opacity: 0.85;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Polaroid rotation variety */
+        .tilt-l { transform: rotate(-2.5deg); }
+        .tilt-r { transform: rotate(2deg); }
+        .tilt-l:hover, .tilt-r:hover { transform: rotate(0deg) translateY(-4px); }
+        .flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+
+        /* 3D Flip Card Effect */
+        .flip-card { background-color: transparent; perspective: 1200px; position: relative; z-index: 0; }
+        .flip-card:hover, .flip-card.flipped { z-index: 20; }
+        .flip-card-inner {
+            position: relative; width: 100%; height: 100%; text-align: center;
+            transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d;
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute; width: 100%; height: 100%;
+            -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 0.25rem;
+        }
+        .flip-card-back { transform: rotateY(180deg); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--paper-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.12); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.12); }
+            70% { transform: scale(1); }
+        }
+        .animate-heartbeat { animation: heartbeat 2.8s infinite; }
+
+        .envelope-card { transition: all 0.35s ease; }
+        .envelope-card:hover { transform: translateY(-6px); box-shadow: 0 22px 32px rgba(51,16,30,0.14); }
+        .envelope-card:hover .seal-crack { opacity: 1; }
+        .seal-crack { opacity: 0; transition: opacity 0.3s ease; }
+
+        #hearts-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-heartbeat, .animate-bounce, .animate-spin { animation: none !important; }
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- CANVAS PARA PÉTALOS / DESTELLOS FLOTANTES -->
+    <canvas id="hearts-canvas"></canvas>
+
+    <!-- REPRODUCTOR DE MÚSICA FLOTANTE -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button id="music-toggle" class="bg-gradient-to-br from-wine-500 to-wine-700 text-gold-100 p-4 rounded-full shadow-2xl border border-gold-300/40 hover:scale-105 transition-transform flex items-center justify-center gap-2 group">
+            <i id="music-icon" class="fa-solid fa-music text-lg text-gold-200"></i>
+            <span id="music-text" class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 text-sm font-medium px-1 font-body text-gold-100">
+                Nuestra Canción
+            </span>
+        </button>
+        <audio id="bg-music" loop>
+            <source src="img/te-regalo.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- HERO SECTION -->
+    <header class="relative min-h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden bg-gradient-to-b from-paper via-paper to-paper-deep">
+        <div class="relative z-20 max-w-4xl mx-auto space-y-8 pt-16">
+
+            <div class="inline-flex items-center gap-3 px-2 py-2 pr-6 rounded-full bg-white/70 backdrop-blur-sm shadow-sm border border-gold-200 text-wine-700">
+                <span class="wax-seal w-9 h-9 rounded-full flex items-center justify-center text-gold-100 text-xs">
+                    <i class="fa-solid fa-cake-candles"></i>
+                </span>
+                <span class="font-body font-medium text-sm tracking-[0.15em] uppercase">3 de Septiembre · El día más especial</span>
+            </div>
+
+            <h1 class="font-display text-6xl md:text-8xl font-medium text-wine-700 leading-[0.95]">
+                Feliz cumpleaños,<br>
+                <span class="font-display italic font-normal text-wine-600">Magali</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-ink/75 max-w-2xl mx-auto font-light leading-relaxed">
+                Hoy celebras tus <strong class="font-medium text-wine-700">20 años</strong>. Esta página es un pequeño cuaderno hecho con todo mi amor, para guardar lo increíble que eres y lo hermoso que es tenerte en mi vida.
+            </p>
+
+            <!-- Estadísticas estilo boleto -->
+            <div class="pt-6 flex flex-wrap justify-center gap-5">
+                <div class="ticket-stub px-7 py-5 rounded-sm flex flex-col items-center min-w-[110px]">
+                    <span class="font-display text-3xl font-semibold text-wine-600">20</span>
+                    <span class="text-[11px] uppercase tracking-[0.15em] text-ink/60 font-body mt-1">Años cumplidos</span>
+                </div>
+                <div class="ticket-stub px-7 py-5 rounded-sm flex flex-col items-center min-w-[110px]">
+                    <span class="font-display text-3xl font-semibold text-wine-600">∞</span>
+                    <span class="text-[11px] uppercase tracking-[0.15em] text-ink/60 font-body mt-1">Momentos juntos</span>
+                </div>
+                <div class="ticket-stub px-7 py-5 rounded-sm flex flex-col items-center min-w-[110px]">
+                    <span class="font-display text-2xl font-semibold text-wine-600"><i class="fa-solid fa-heart animate-heartbeat"></i></span>
+                    <span class="text-[11px] uppercase tracking-[0.15em] text-ink/60 font-body mt-1">Magali &amp; Dariela</span>
+                </div>
+            </div>
+
+            <div class="pt-8">
+                <a href="#historia" class="inline-flex items-center gap-3 bg-wine-600 hover:bg-wine-700 text-gold-100 font-body font-medium px-8 py-4 rounded-full shadow-lg hover:shadow-wine-500/30 transition-all transform hover:-translate-y-1 border border-gold-300/30">
+                    <span>Descubrir tu regalo</span>
+                    <i class="fa-solid fa-arrow-down text-sm"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-wine-400 animate-bounce text-xl">
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <div class="torn-edge"></div>
+
+    <!-- SECCIÓN: NUESTRA HISTORIA (LÍNEA DEL TIEMPO TIPO HILO) -->
+    <section id="historia" class="py-24 px-4 max-w-6xl mx-auto bg-paper">
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <h2 class="text-gold-500 font-body font-semibold uppercase tracking-[0.2em] text-xs">Nuestra historia</h2>
+            <h3 class="font-display text-4xl md:text-5xl text-wine-700 font-medium italic">Cómo comenzó todo</h3>
+            <p class="text-ink/60 font-light">Un pequeño viaje en el tiempo, hilvanando los pasos que nos trajeron hasta aquí.</p>
+        </div>
+
+        <div class="relative thread-line ml-4 md:ml-32 space-y-14 pl-8 md:pl-12">
+
+            <!-- Hito 1: Gimnasio -->
+            <div class="relative group">
+                <div class="absolute -left-[46px] md:-left-[62px] top-1 wax-seal text-gold-100 w-9 h-9 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-dumbbell text-xs"></i>
+                </div>
+                <div class="bg-white/80 p-6 md:p-8 rounded-sm shadow-lg shadow-wine-900/5 border border-gold-200/60 space-y-4 transition-all group-hover:border-gold-300">
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-dashed border-gold-300/60 pb-3">
+                        <span class="font-display font-semibold text-xl text-wine-700">Donde nos vimos por primera vez: el gym</span>
+                        <span class="text-[11px] bg-gold-100 text-gold-600 font-body font-semibold px-3 py-1 rounded-full tracking-wide uppercase">El inicio de todo</span>
+                    </div>
+                    <p class="text-ink/75 leading-relaxed font-light">
+                        Ahí nos vimos por primera vez, entre rutinas y miradas discretas. No sabíamos que ese lugar sería el comienzo de todo lo que vendría después.
+                    </p>
+
+                    <!-- Carrusel de fotos del gym -->
+                    <div class="gym-carousel relative rounded-sm overflow-hidden bg-paper-deep border border-gold-200" data-carousel>
+                        <div class="carousel-track flex transition-transform duration-500 ease-out">
+                            <div class="carousel-slide shrink-0 w-full">
+                                <img src="img/gym-1.jpg" alt="En el gym 1" class="w-full h-auto object-contain group-hover/img:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80'">
+                            </div>
+                            <div class="carousel-slide shrink-0 w-full">
+                                <img src="img/gym-2.jpg" alt="En el gym 2" class="w-full h-auto object-contain group-hover/img:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=900&q=80'">
+                            </div>
+                            <div class="carousel-slide shrink-0 w-full">
+                                <img src="img/gym-3.jpg" alt="En el gym 3" class="w-full h-auto object-contain group-hover/img:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1554284126-aa88f22d8b74?auto=format&fit=crop&w=900&q=80'">
+                            </div>
+                            <div class="carousel-slide shrink-0 w-full">
+                                <img src="img/gym-4.jpg" alt="En el gym 4" class="w-full h-auto object-contain group-hover/img:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=900&q=80'">
+                            </div>
+                        </div>
+
+                        <!-- Flechas -->
+                        <button type="button" class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-wine-700/70 hover:bg-wine-700 text-gold-100 flex items-center justify-center backdrop-blur-sm transition-colors">
+                            <i class="fa-solid fa-chevron-left text-sm"></i>
+                        </button>
+                        <button type="button" class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-wine-700/70 hover:bg-wine-700 text-gold-100 flex items-center justify-center backdrop-blur-sm transition-colors">
+                            <i class="fa-solid fa-chevron-right text-sm"></i>
+                        </button>
+
+                        <!-- Etiqueta -->
+                        <div class="absolute bottom-3 left-3 bg-wine-800/70 backdrop-blur-sm text-gold-100 px-3 py-1 rounded-sm text-xs font-body">
+                            <i class="fa-solid fa-camera mr-1"></i> Nuestros recuerdos del gym
+                        </div>
+
+                        <!-- Puntos indicadores -->
+                        <div class="carousel-dots absolute bottom-3 right-3 flex gap-1.5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hito 2: Walmart -->
+            <div class="relative group">
+                <div class="absolute -left-[46px] md:-left-[62px] top-1 wax-seal text-gold-100 w-9 h-9 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-cart-shopping text-xs"></i>
+                </div>
+                <div class="bg-white/80 p-6 md:p-8 rounded-sm shadow-lg shadow-wine-900/5 border border-gold-200/60 space-y-4 transition-all group-hover:border-gold-300">
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-dashed border-gold-300/60 pb-3">
+                        <span class="font-display font-semibold text-xl text-wine-700">Nuestra primera cita: Walmart</span>
+                        <span class="text-[11px] bg-gold-100 text-gold-600 font-body font-semibold px-3 py-1 rounded-full tracking-wide uppercase">El siguiente paso</span>
+                    </div>
+                    <p class="text-ink/75 leading-relaxed font-light">
+                        Después de conocernos en el gym, nos vimos un rato en Walmart. Recuerdo perfectamente nuestras pláticas, la emoción de conocerte un poco más y ese camino de regreso en el que te llevé a tu casa. Sin saberlo, estábamos dando otro paso hacia algo hermoso.
+                    </p>
+                    <div class="rounded-sm overflow-hidden bg-paper-deep border border-gold-200 relative group/img">
+                        <img src="img/IMG_2613.jpg" alt="Nuestra primera cita" class="w-full h-auto object-contain group-hover/img:scale-105 transition-transform duration-500">
+                        <div class="absolute bottom-3 left-3 bg-wine-800/70 backdrop-blur-sm text-gold-100 px-3 py-1 rounded-sm text-xs font-body">
+                            <i class="fa-solid fa-camera mr-1"></i> Primera cita inolvidable
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hito 2: Salidas e historias -->
+            <div class="relative group">
+                <div class="absolute -left-[46px] md:-left-[62px] top-1 wax-seal text-gold-100 w-9 h-9 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-mug-hot text-xs"></i>
+                </div>
+                <div class="bg-white/80 p-6 md:p-8 rounded-sm shadow-lg shadow-wine-900/5 border border-gold-200/60 space-y-4 transition-all group-hover:border-gold-300">
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-dashed border-gold-300/60 pb-3">
+                        <span class="font-display font-semibold text-xl text-wine-700">Muchas salidas más</span>
+                        <span class="text-[11px] bg-gold-100 text-gold-600 font-body font-semibold px-3 py-1 rounded-full tracking-wide uppercase">Construyendo recuerdos</span>
+                    </div>
+                    <p class="text-ink/75 leading-relaxed font-light">
+                        A esa primera cita le siguieron muchas otras. Entre risas, pláticas largas, paseos e instantes compartidos, me fui dando cuenta de la mujer tan maravillosa, fuerte y llena de luz que eres.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Hito 3: Los 20 de Magali -->
+            <div class="relative group">
+                <div class="absolute -left-[46px] md:-left-[62px] top-1 wax-seal text-gold-100 w-9 h-9 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-gift text-xs"></i>
+                </div>
+                <div class="bg-white/80 p-6 md:p-8 rounded-sm shadow-lg shadow-wine-900/5 border border-gold-200/60 space-y-4 transition-all group-hover:border-gold-300">
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-dashed border-gold-300/60 pb-3">
+                        <span class="font-display font-semibold text-xl text-wine-700">Hoy: tus 20 años</span>
+                        <span class="text-[11px] bg-wine-600 text-gold-100 font-body font-semibold px-3 py-1 rounded-full tracking-wide uppercase">3 de septiembre</span>
+                    </div>
+                    <p class="text-ink/75 leading-relaxed font-light">
+                        Llegas a tus 20s siendo una mujer increíble, una mamá maravillosa y alguien de quien me siento profundamente orgulloso. ¡Que la vida te brinde tanta alegría como tú le das a mi mundo!
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="torn-edge"></div>
+
+    <!-- SECCIÓN DEDICADA A MAGALI Y DARIELA -->
+    <section class="py-20 bg-paper-deep relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="bg-white/90 rounded-sm p-8 md:p-12 shadow-2xl border border-gold-200 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+                <div class="space-y-6">
+                    <div class="inline-flex items-center gap-2 text-wine-600 font-body font-semibold text-xs bg-gold-50 px-4 py-1.5 rounded-full border border-gold-200 uppercase tracking-[0.15em]">
+                        <i class="fa-solid fa-heart"></i>
+                        Mis dos grandes amores
+                    </div>
+                    <h2 class="font-display text-4xl md:text-5xl font-medium text-wine-700 leading-tight">
+                        Magali &amp;<br><span class="italic text-gold-500">la pequeña Dariela</span>
+                    </h2>
+                    <p class="text-ink/75 leading-relaxed text-lg font-light">
+                        Verte en tu faceta de mamá es una de las cosas más hermosas que he presenciado. La ternura, paciencia y amor con el que cuidas a <strong class="text-wine-700 font-medium">Dariela</strong> demuestra el tamaño de tu corazón.
+                    </p>
+                    <div class="bg-gold-50 p-6 rounded-sm border-l-4 border-gold-400 space-y-2">
+                        <p class="font-hand text-2xl text-wine-700 leading-snug">
+                            "Sus tardes en el parque jugando, corriendo y riendo juntas son mis recuerdos favoritos."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="rounded-sm overflow-hidden shadow-lg border-4 border-white bg-black relative group h-80">
+                        <video class="w-full h-full object-cover" controls poster="img/IMG_1559.JPG">
+                            <source src="img/copy_9BCD9BB0-30E6-42A6-93B7-F3D584EE0D9B (1).mp4" type="video/mp4">
+                            Tu navegador no soporta el video.
+                        </video>
+                    </div>
+                    <p class="text-center text-xs text-wine-700/60 font-body tracking-wide">
+                        <i class="fa-solid fa-sparkles text-gold-400 mr-1"></i> Días de parque, risas y juego junto a Dariela
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="torn-edge"></div>
+
+    <!-- SECCIÓN: CARTAS CON SELLO DE CERA ("ÁBREME CUANDO...") -->
+    <section class="py-24 max-w-6xl mx-auto px-4 bg-paper">
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <h2 class="text-gold-500 font-body font-semibold uppercase tracking-[0.2em] text-xs">Cartas digitales</h2>
+            <h3 class="font-display text-4xl md:text-5xl text-wine-700 font-medium italic">Ábreme cuando...</h3>
+            <p class="text-ink/60 font-light">Rompe el sello de cada carta para descubrir el mensaje escondido para ti.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Carta 1 -->
+            <div onclick="openModal('letter1')" class="envelope-card bg-white p-8 rounded-sm shadow-md border border-gold-200 cursor-pointer flex flex-col items-center text-center space-y-4 group relative">
+                <div class="wax-seal relative w-16 h-16 rounded-full flex items-center justify-center text-gold-100 text-xl">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <span class="seal-crack absolute inset-0 rounded-full border-2 border-gold-200/70"></span>
+                </div>
+                <h4 class="font-display font-semibold text-xl text-wine-700">Ábreme hoy (tus 20)</h4>
+                <p class="text-sm text-ink/60 font-light">Un mensaje directo de mi corazón en el día de tu cumpleaños.</p>
+                <span class="text-[11px] text-gold-500 font-body font-semibold uppercase tracking-[0.15em]">Toca para abrir &rarr;</span>
+            </div>
+
+            <!-- Carta 2 -->
+            <div onclick="openModal('letter2')" class="envelope-card bg-white p-8 rounded-sm shadow-md border border-gold-200 cursor-pointer flex flex-col items-center text-center space-y-4 group relative">
+                <div class="wax-seal relative w-16 h-16 rounded-full flex items-center justify-center text-gold-100 text-xl">
+                    <i class="fa-solid fa-face-smile"></i>
+                    <span class="seal-crack absolute inset-0 rounded-full border-2 border-gold-200/70"></span>
+                </div>
+                <h4 class="font-display font-semibold text-xl text-wine-700">Ábreme cuando sonrías</h4>
+                <p class="text-sm text-ink/60 font-light">Para recordarte lo mucho que me fascina la forma en que iluminas todo.</p>
+                <span class="text-[11px] text-gold-500 font-body font-semibold uppercase tracking-[0.15em]">Toca para abrir &rarr;</span>
+            </div>
+
+            <!-- Carta 3 -->
+            <div onclick="openModal('letter3')" class="envelope-card bg-white p-8 rounded-sm shadow-md border border-gold-200 cursor-pointer flex flex-col items-center text-center space-y-4 group relative">
+                <div class="wax-seal relative w-16 h-16 rounded-full flex items-center justify-center text-gold-100 text-xl">
+                    <i class="fa-solid fa-cloud-sun"></i>
+                    <span class="seal-crack absolute inset-0 rounded-full border-2 border-gold-200/70"></span>
+                </div>
+                <h4 class="font-display font-semibold text-xl text-wine-700">Ábreme si tienes un mal día</h4>
+                <p class="text-sm text-ink/60 font-light">Un abrazo hecho palabras para recordarte lo fuerte e increíble que eres.</p>
+                <span class="text-[11px] text-gold-500 font-body font-semibold uppercase tracking-[0.15em]">Toca para abrir &rarr;</span>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="torn-edge"></div>
+
+    <!-- SECCIÓN: GALERÍA POLAROID CON WASHI TAPE -->
+    <section class="py-24 bg-paper-deep">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <h2 class="text-gold-500 font-body font-semibold uppercase tracking-[0.2em] text-xs">Momentos &amp; poemas</h2>
+                <h3 class="font-display text-4xl md:text-5xl text-wine-700 font-medium italic">Galería del cuaderno</h3>
+                <p class="text-ink/60 font-light">Pasa el cursor o toca cada foto para ver la nota escrita detrás.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pt-4">
+
+                <!-- Polaroid 1 -->
+                <div class="flip-card h-[420px] w-full tilt-l transition-transform duration-300">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white p-4 pt-6 shadow-xl border border-gold-200/70 flex flex-col justify-between relative">
+                            <span class="washi"></span>
+                            <div class="h-72 w-full overflow-hidden bg-paper">
+                                <img src="img/IMG_2710.jpg" alt="Magali" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80'">
+                            </div>
+                            <div class="text-center py-3">
+                                <span class="font-hand text-2xl text-wine-700">La cumpleañera hermosa</span>
+                            </div>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-wine-600 to-wine-800 text-gold-100 p-8 flex flex-col justify-center items-center text-center shadow-xl">
+                            <i class="fa-solid fa-quote-left text-2xl text-gold-300 mb-4"></i>
+                            <p class="font-display italic text-xl leading-relaxed">
+                                Eres la mezcla perfecta entre ternura, fuerza y alegría. Celebrar tus 20 años es el mayor de mis privilegios.
+                            </p>
+                            <span class="mt-6 font-hand text-2xl text-gold-200">— Siempre tuyo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 2 -->
+                <div class="flip-card h-[420px] w-full tilt-r transition-transform duration-300">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white p-4 pt-6 shadow-xl border border-gold-200/70 flex flex-col justify-between relative">
+                            <span class="washi"></span>
+                            <div class="h-72 w-full overflow-hidden bg-paper">
+                                <img src="img/7B7CFAAB-BAF4-4FD0-B603-91DE8066571D.JPG" alt="Momento juntos" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80'">
+                            </div>
+                            <div class="text-center py-3">
+                                <span class="font-hand text-2xl text-wine-700">Tu sonrisa inigualable</span>
+                            </div>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-wine-700 to-wine-900 text-gold-100 p-8 flex flex-col justify-center items-center text-center shadow-xl">
+                            <i class="fa-solid fa-heart text-2xl text-gold-300 mb-4"></i>
+                            <p class="font-display italic text-xl leading-relaxed">
+                                Tu risa tiene la magia de cambiar cualquier día gris en el momento más bonito de la semana.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 3 -->
+                <div class="flip-card h-[420px] w-full tilt-l transition-transform duration-300">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white p-4 pt-6 shadow-xl border border-gold-200/70 flex flex-col justify-between relative">
+                            <span class="washi"></span>
+                            <div class="h-72 w-full overflow-hidden bg-paper">
+                                <img src="img/PHOTO-2026-04-05-17-24-37.jpg" alt="Jugando en el parque" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=800&q=80'">
+                            </div>
+                            <div class="text-center py-3">
+                                <span class="font-hand text-2xl text-wine-700">Magali &amp; Dariela</span>
+                            </div>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-wine-600 to-wine-800 text-gold-100 p-8 flex flex-col justify-center items-center text-center shadow-xl">
+                            <i class="fa-solid fa-sparkles text-2xl text-gold-300 mb-4"></i>
+                            <p class="font-display italic text-xl leading-relaxed">
+                                La familia y los momentos más puros se resumen en ustedes dos jugando bajo el sol.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="torn-edge"></div>
+
+    <!-- SECCIÓN POEMA (PÁGINA DE CUADERNO) -->
+    <section class="py-24 max-w-4xl mx-auto px-4 text-center bg-paper">
+        <div class="bg-white/70 p-8 md:p-16 rounded-sm shadow-xl stitch-divider border border-gold-200 space-y-6 relative overflow-hidden">
+            <div class="absolute -top-8 -right-8 text-gold-100 text-9xl font-display">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+
+            <i class="fa-solid fa-feather-pointed text-2xl text-gold-500"></i>
+            <h2 class="font-display text-3xl md:text-4xl text-wine-700 font-medium italic">Un poema para Magali</h2>
+
+            <div class="font-display text-lg md:text-2xl text-ink/85 italic leading-relaxed space-y-4 max-w-2xl mx-auto py-4">
+                <p>Llegaste a mi vida sin previo aviso,<br>transformando una plática en un paraíso.</p>
+                <p>Hoy cumples veinte años de luz y dulzura,<br>de ser mamá ejemplar, de ternura pura.</p>
+                <p>Que la vida te devuelva multiplicado,<br>todo el amor que a tu paso has regalado.</p>
+            </div>
+
+            <div class="pt-4">
+                <span class="font-hand text-3xl text-wine-600 font-semibold">Con todo mi amor</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER / CIERRE -->
+    <footer class="py-12 bg-wine-800 text-gold-100/80 text-center px-4 space-y-4">
+        <div class="flex justify-center items-center gap-2 text-gold-300 text-2xl">
+            <i class="fa-solid fa-heart animate-heartbeat"></i>
+        </div>
+        <p class="font-display italic text-2xl text-gold-100">Feliz cumpleaños, Magali</p>
+        <p class="text-xs text-gold-200/50 font-body tracking-[0.15em] uppercase">3 de septiembre · Celebrando tus 20 años</p>
+    </footer>
+
+    <!-- MODAL PARA LAS CARTAS -->
+    <div id="letter-modal" class="fixed inset-0 bg-wine-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-paper max-w-lg w-full rounded-sm p-8 shadow-2xl border border-gold-200 space-y-6 transform transition-all scale-95 opacity-0 duration-300" id="modal-content">
+            <div class="flex justify-between items-center border-b border-dashed border-gold-300 pb-4">
+                <h3 id="modal-title" class="font-display text-2xl font-semibold text-wine-700"></h3>
+                <button onclick="closeModal()" class="text-wine-400 hover:text-wine-600 text-2xl leading-none">&times;</button>
+            </div>
+            <p id="modal-body" class="text-ink/80 leading-relaxed text-lg font-light"></p>
+            <div class="text-right pt-4">
+                <button onclick="closeModal()" class="bg-wine-600 text-gold-100 px-6 py-2 rounded-full font-body font-medium shadow-md hover:bg-wine-700 transition-colors">
+                    Cerrar con amor ❤️
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT DE INTERACTIVIDAD -->
+    <script>
+        // 1. Música de fondo toggle
+        const bgMusic = document.getElementById('bg-music');
+        const musicToggle = document.getElementById('music-toggle');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
+
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.classList.remove('fa-compact-disc', 'animate-spin');
+                musicIcon.classList.add('fa-music');
+            } else {
+                bgMusic.play().catch(e => console.log('Audio autoplay prevented'));
+                musicIcon.classList.remove('fa-music');
+                musicIcon.classList.add('fa-compact-disc', 'animate-spin');
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // 2. Modales para Cartas
+        const modalMessages = {
+            letter1: {
+                title: "Feliz cumpleaños #20, Magali",
+                body: "Hoy cumples 20 años y no puedo dejar de pensar en lo afortunado que me siento de caminar a tu lado. Gracias por tu sonrisa, por la hermosa mamá que eres para Dariela y por cada momento inolvidable. ¡Que este nuevo año de vida esté lleno de metas cumplidas y momentos mágicos!"
+            },
+            letter2: {
+                title: "Tu sonrisa es mi lugar favorito",
+                body: "Cada vez que sonríes, todo a tu alrededor parece volverse más ligero y bonito. Nunca dejes de sonreír por nada ni por nadie, porque esa luz es única."
+            },
+            letter3: {
+                title: "Eres una mujer increíble",
+                body: "Si estás teniendo un día cansado o difícil, recuerda que eres fuerte, capaz, hermosa e inteligente. Tienes un corazón de oro y estás construyendo un futuro hermoso para ti y para Dariela. ¡Estoy orgulloso de ti siempre!"
+            }
+        };
+
+        function openModal(key) {
+            const modal = document.getElementById('letter-modal');
+            const modalContent = document.getElementById('modal-content');
+            document.getElementById('modal-title').innerText = modalMessages[key].title;
+            document.getElementById('modal-body').innerText = modalMessages[key].body;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('letter-modal');
+            const modalContent = document.getElementById('modal-content');
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // 3. Carruseles de fotos (funciona para cualquier número de fotos)
+        document.querySelectorAll('[data-carousel]').forEach((carousel) => {
+            const track = carousel.querySelector('.carousel-track');
+            const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+            const dotsWrap = carousel.querySelector('.carousel-dots');
+            const prevBtn = carousel.querySelector('.carousel-prev');
+            const nextBtn = carousel.querySelector('.carousel-next');
+            let index = 0;
+
+            slides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'w-2 h-2 rounded-full bg-gold-100/80 transition-all';
+                dot.addEventListener('click', () => goTo(i));
+                dotsWrap.appendChild(dot);
+            });
+            const dots = Array.from(dotsWrap.children);
+
+            function update() {
+                track.style.transform = `translateX(-${index * 100}%)`;
+                dots.forEach((d, i) => {
+                    d.classList.toggle('bg-gold-400', i === index);
+                    d.classList.toggle('w-4', i === index);
+                    d.classList.toggle('bg-gold-100/80', i !== index);
+                });
+            }
+
+            function goTo(i) {
+                index = (i + slides.length) % slides.length;
+                update();
+            }
+
+            prevBtn.addEventListener('click', () => goTo(index - 1));
+            nextBtn.addEventListener('click', () => goTo(index + 1));
+
+            // Deslizar con el dedo en móvil
+            let startX = 0;
+            track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+            track.addEventListener('touchend', (e) => {
+                const diff = e.changedTouches[0].clientX - startX;
+                if (diff > 40) goTo(index - 1);
+                else if (diff < -40) goTo(index + 1);
+            }, { passive: true });
+
+            update();
+        });
+
+        // 4. Pétalos / destellos flotantes en el fondo (canvas)
+        const canvas = document.getElementById('hearts-canvas');
+        const ctx = canvas.getContext('2d');
+        let hearts = [];
+        const palette = ['#B8925A', '#C1899A', '#5E2138'];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Heart {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 9 + 6;
+                this.speedY = Math.random() * 0.9 + 0.3;
+                this.opacity = Math.random() * 0.3 + 0.15;
+                this.color = palette[Math.floor(Math.random() * palette.length)];
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < -20) {
+                    this.y = canvas.height + 20;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.bezierCurveTo(this.x - this.size / 2, this.y - this.size / 2, this.x - this.size, this.y + this.size / 3, this.x, this.y + this.size);
+                ctx.bezierCurveTo(this.x + this.size, this.y + this.size / 3, this.x + this.size / 2, this.y - this.size / 2, this.x, this.y);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 18; i++) {
+            hearts.push(new Heart());
+        }
+
+        function animateHearts() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hearts.forEach(heart => {
+                heart.update();
+                heart.draw();
+            });
+            requestAnimationFrame(animateHearts);
+        }
+        animateHearts();
+    </script>
+</body>
+</html>

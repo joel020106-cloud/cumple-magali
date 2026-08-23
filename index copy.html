@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños Magali! ✨❤️</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fdf8f5;
+            color: #4a3b47;
+            overflow-x: hidden;
+        }
+
+        .font-serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-handwriting {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Gradient backgrounds */
+        .hero-gradient {
+            background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 50%, #fff0f3 100%);
+        }
+
+        .card-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #fff5f7 100%);
+        }
+
+        /* Floating Hearts Canvas Overlay */
+        #hearts-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* 3D Flip Card Effect */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1.25rem;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff0f3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffb3c1;
+            border-radius: 4px;
+        }
+
+        /* Pulse Heart Animation */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.15); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.15); }
+            70% { transform: scale(1); }
+        }
+        .animate-heartbeat {
+            animation: heartbeat 2.5s infinite;
+        }
+
+        /* Envelope interactive styles */
+        .envelope-card {
+            transition: all 0.3s ease;
+        }
+        .envelope-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px rgba(225, 112, 137, 0.2);
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- CANVAS PARA CORAZONES FLOTANTES -->
+    <canvas id="hearts-canvas"></canvas>
+
+    <!-- REPRODUCTOR DE MÚSICA FLOTANTE -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button id="music-toggle" class="bg-gradient-to-r from-rose-500 to-pink-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center gap-2 group">
+            <i id="music-icon" class="fa-solid fa-music text-xl animate-bounce"></i>
+            <span id="music-text" class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 text-sm font-medium px-1">
+                Nuestra Canción
+            </span>
+        </button>
+        <!-- Reemplaza 'cancion.mp3' por el enlace o nombre de tu archivo de audio -->
+        <audio id="bg-music" loop>
+            <source src="img/Rels B, J Abecia - Te Regalo (Audio Oficial).mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- HERO SECTION -->
+    <header class="relative min-h-screen hero-gradient flex flex-col justify-center items-center text-center px-4 overflow-hidden">
+        <div class="relative z-20 max-w-4xl mx-auto space-y-6 pt-12">
+            
+            <div class="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/80 backdrop-blur-md shadow-sm border border-rose-200 text-rose-600 font-semibold text-sm md:text-base tracking-wide">
+                <i class="fa-solid fa-cake-candles text-rose-500"></i>
+                3 DE SEPTIEMBRE • EL DÍA MÁS ESPECIAL
+            </div>
+
+            <h1 class="font-serif-title text-5xl md:text-7xl lg:text-8xl font-bold text-rose-950 leading-tight">
+                ¡Feliz Cumpleaños, <br>
+                <span class="font-handwriting text-rose-600 font-normal italic drop-shadow-sm">Magali</span>! ✨
+            </h1>
+
+            <p class="text-lg md:text-2xl text-rose-800/80 max-w-2xl mx-auto font-light leading-relaxed">
+                Hoy celebras tus <strong class="font-semibold text-rose-900">20 años</strong>. Esta página web es un pequeño rincón hecho con todo mi amor para recordar lo increíble que eres y lo hermoso que es tenerte en mi vida.
+            </p>
+
+            <!-- Contador Regresivo / Badge -->
+            <div class="pt-6 flex flex-wrap justify-center gap-4 text-rose-900">
+                <div class="bg-white/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-lg border border-pink-100 flex flex-col items-center min-w-[100px]">
+                    <span class="font-serif-title text-3xl font-bold text-rose-600">20</span>
+                    <span class="text-xs uppercase tracking-wider text-rose-800 font-medium">Años Cumplidos</span>
+                </div>
+                <div class="bg-white/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-lg border border-pink-100 flex flex-col items-center min-w-[100px]">
+                    <span class="font-serif-title text-3xl font-bold text-rose-600">∞</span>
+                    <span class="text-xs uppercase tracking-wider text-rose-800 font-medium">Momentos Juntos</span>
+                </div>
+                <div class="bg-white/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-lg border border-pink-100 flex flex-col items-center min-w-[100px]">
+                    <span class="font-serif-title text-3xl font-bold text-rose-600"><i class="fa-solid fa-heart animate-heartbeat text-rose-500"></i></span>
+                    <span class="text-xs uppercase tracking-wider text-rose-800 font-medium">Magali & Dariela</span>
+                </div>
+            </div>
+
+            <div class="pt-8">
+                <a href="#historia" class="inline-flex items-center gap-3 bg-rose-600 hover:bg-rose-700 text-white font-medium px-8 py-4 rounded-full shadow-lg hover:shadow-rose-300/50 transition-all transform hover:-translate-y-1">
+                    <span>Descubrir Tu Regalo</span>
+                    <i class="fa-solid fa-arrow-down text-sm"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Decorativos del hero -->
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-rose-400 animate-bounce text-2xl">
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <!-- SECCIÓN: NUESTRA HISTORIA (LÍNEA DEL TIEMPO INTERACTIVA) -->
+    <section id="historia" class="py-24 px-4 max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <h2 class="text-rose-600 font-semibold uppercase tracking-wider text-sm">Nuestra Historia</h2>
+            <h3 class="font-serif-title text-4xl md:text-5xl text-rose-950 font-bold">Cómo Comenzó Todo</h3>
+            <p class="text-rose-800/70">Un pequeño viaje en el tiempo recordando los pasos que nos trajeron hasta aquí.</p>
+        </div>
+
+        <div class="relative border-l-2 border-rose-200 ml-4 md:ml-32 space-y-12">
+            
+            <!-- Hito 1: Walmart -->
+            <div class="relative pl-8 md:pl-12 group">
+                <div class="absolute -left-[17px] top-1 bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md ring-4 ring-rose-100">
+                    <i class="fa-solid fa-cart-shopping text-xs"></i>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl shadow-rose-950/5 border border-rose-100 space-y-4 transition-all group-hover:border-rose-300">
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-rose-100 pb-3">
+                        <span class="font-serif-title font-bold text-xl text-rose-950">El Primer Encuentro: Walmart</span>
+                        <span class="text-xs bg-rose-100 text-rose-700 font-semibold px-3 py-1 rounded-full">Donde nació todo</span>
+                    </div>
+                    <p class="text-rose-900/80 leading-relaxed">
+                        Nos vimos un rato en Walmart. Recuerdo perfectamente nuestras pláticas, la emoción de conocerte un poco más y ese camino de regreso en el que te llevé a tu casa. Sin saberlo, estábamos dando el primer paso de algo hermoso.
+                    </p>
+                    <div class="rounded-xl overflow-hidden bg-rose-50 border border-rose-100 relative group/img">
+                        <!-- Reemplaza 'foto_walmart.jpg' por tu foto -->
+                        <img src="img/IMG_2613.jpg" alt="Nuestra primera cita" class="w-full h-auto object-contain group-hover/img:scale-105 transition-transform duration-500">
+                        <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-lg text-xs">
+                            <i class="fa-solid fa-camera mr-1"></i> Primera cita inolvidable
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hito 2: Salidas e historias -->
+            <div class="relative pl-8 md:pl-12 group">
+                <div class="absolute -left-[17px] top-1 bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md ring-4 ring-rose-100">
+                    <i class="fa-solid fa-mug-hot text-xs"></i>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl shadow-rose-950/5 border border-rose-100 space-y-4 transition-all group-hover:border-rose-300">
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-rose-100 pb-3">
+                        <span class="font-serif-title font-bold text-xl text-rose-950">Muchas Salidas Más</span>
+                        <span class="text-xs bg-rose-100 text-rose-700 font-semibold px-3 py-1 rounded-full">Construyendo recuerdos</span>
+                    </div>
+                    <p class="text-rose-900/80 leading-relaxed">
+                        A esa primera cita le siguieron muchas otras. Entre risas, pláticas largas, paseos e instantes compartidos, me fui dando cuenta de la mujer tan maravillosa, fuerte y llena de luz que eres.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Hito 3: Los 20 de Magali -->
+            <div class="relative pl-8 md:pl-12 group">
+                <div class="absolute -left-[17px] top-1 bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md ring-4 ring-rose-100">
+                    <i class="fa-solid fa-gift text-xs"></i>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl shadow-rose-950/5 border border-rose-100 space-y-4 transition-all group-hover:border-rose-300">
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-rose-100 pb-3">
+                        <span class="font-serif-title font-bold text-xl text-rose-950">Hoy: Tus 20 Años</span>
+                        <span class="text-xs bg-rose-600 text-white font-semibold px-3 py-1 rounded-full">3 de Septiembre</span>
+                    </div>
+                    <p class="text-rose-900/80 leading-relaxed">
+                        Llegas a tus 20s siendo una mujer increíble, una mamá maravillosa y alguien de quien me siento profundamente orgulloso. ¡Que la vida te brinde tanta alegría como tú le das a mi mundo!
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECCIÓN DEDICADA A MAGALI Y DARIELA -->
+    <section class="py-20 bg-rose-100/50 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-rose-200/60 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <div class="space-y-6">
+                    <div class="inline-flex items-center gap-2 text-rose-600 font-semibold text-sm bg-rose-50 px-4 py-1.5 rounded-full border border-rose-200">
+                        <i class="fa-solid fa-heart"></i>
+                        MIS DOS GRANDES AMORES
+                    </div>
+                    <h2 class="font-serif-title text-4xl md:text-5xl font-bold text-rose-950 leading-tight">
+                        Magali & <br><span class="text-rose-600">La Pequeña Dariela</span>
+                    </h2>
+                    <p class="text-rose-900/80 leading-relaxed text-lg">
+                        Verte en tu faceta de mamá es una de las cosas más hermosas que he presenciado. La ternura, paciencia y amor con el que cuidas a <strong class="text-rose-950 font-semibold">Dariela</strong> demuestra el tamaño de tu corazón.
+                    </p>
+                    <div class="bg-rose-50 p-6 rounded-2xl border-l-4 border-rose-500 space-y-2">
+                        <p class="font-handwriting text-2xl text-rose-800">
+                            "Sus tardes en el parque jugando, corriendo y riendo juntas son mis recuerdos favoritos."
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Galería / Video o Foto del Parque -->
+                <div class="space-y-4">
+                    <div class="rounded-2xl overflow-hidden shadow-lg border-4 border-white bg-black relative group h-80">
+                        <!-- Puedes cambiar 'video_parque.mp4' por un video real o 'foto_parque.jpg' por una foto -->
+                        <video class="w-full h-full object-cover" controls poster="img/IMG_1559.JPG">
+                            <source src="img/copy_9BCD9BB0-30E6-42A6-93B7-F3D584EE0D9B (1).mp4" type="video/mp4">
+                            Tu navegador no soporta el video.
+                        </video>
+                    </div>
+                    <p class="text-center text-xs text-rose-700/70 font-medium">
+                        <i class="fa-solid fa-sparkles text-rose-400 mr-1"></i> Días de parque, risas y juego junto a Dariela
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN: CARTAS INTERACTIVAS ("ÁBREME CUANDO...") -->
+    <section class="py-24 max-w-6xl mx-auto px-4">
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <h2 class="text-rose-600 font-semibold uppercase tracking-wider text-sm">Cartas Digitales</h2>
+            <h3 class="font-serif-title text-4xl md:text-5xl text-rose-950 font-bold">Ábreme Cuando...</h3>
+            <p class="text-rose-800/70">Haz clic en cada sobre para descubrir el mensaje especial escondido para ti.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Carta 1 -->
+            <div onclick="openModal('letter1')" class="envelope-card bg-white p-8 rounded-2xl shadow-lg border border-rose-100 cursor-pointer flex flex-col items-center text-center space-y-4 group">
+                <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center text-2xl group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                </div>
+                <h4 class="font-serif-title font-bold text-xl text-rose-950">Ábreme Hoy (Tus 20)</h4>
+                <p class="text-sm text-rose-800/70">Un mensaje directo de mi corazón en el día de tu cumpleaños.</p>
+                <span class="text-xs text-rose-500 font-semibold uppercase tracking-wider">Toca para abrir &rarr;</span>
+            </div>
+
+            <!-- Carta 2 -->
+            <div onclick="openModal('letter2')" class="envelope-card bg-white p-8 rounded-2xl shadow-lg border border-rose-100 cursor-pointer flex flex-col items-center text-center space-y-4 group">
+                <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center text-2xl group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                    <i class="fa-solid fa-face-smile"></i>
+                </div>
+                <h4 class="font-serif-title font-bold text-xl text-rose-950">Ábreme cuando sonrías</h4>
+                <p class="text-sm text-rose-800/70">Para recordarte lo mucho que me fascina la forma en que iluminas todo.</p>
+                <span class="text-xs text-rose-500 font-semibold uppercase tracking-wider">Toca para abrir &rarr;</span>
+            </div>
+
+            <!-- Carta 3 -->
+            <div onclick="openModal('letter3')" class="envelope-card bg-white p-8 rounded-2xl shadow-lg border border-rose-100 cursor-pointer flex flex-col items-center text-center space-y-4 group">
+                <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center text-2xl group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                    <i class="fa-solid fa-cloud-sun"></i>
+                </div>
+                <h4 class="font-serif-title font-bold text-xl text-rose-950">Ábreme si tienes un mal día</h4>
+                <p class="text-sm text-rose-800/70">Un abrazo hecho palabras para recordarte lo fuerte e increíble que eres.</p>
+                <span class="text-xs text-rose-500 font-semibold uppercase tracking-wider">Toca para abrir &rarr;</span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECCIÓN: GALERÍA POLAROID QUE SE VOLTEA -->
+    <section class="py-24 bg-rose-50/60">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <h2 class="text-rose-600 font-semibold uppercase tracking-wider text-sm">Momentos & Poemas</h2>
+                <h3 class="font-serif-title text-4xl md:text-5xl text-rose-950 font-bold">Galería Interactiva</h3>
+                <p class="text-rose-800/70">Pasa el cursor o toca cada foto Polaroid para ver la nota que lleva detrás.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Polaroid 1 -->
+                <div class="flip-card h-[420px] w-full">
+                    <div class="flip-card-inner">
+                        <!-- Front -->
+                        <div class="flip-card-front bg-white p-4 shadow-xl border border-rose-100 flex flex-col justify-between">
+                            <div class="h-72 w-full overflow-hidden rounded-lg bg-gray-100">
+                                <img src="img/IMG_2710.jpg" alt="Magali" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80'">
+                            </div>
+                            <div class="text-center py-2">
+                                <span class="font-handwriting text-2xl text-rose-900">La Cumpleañera Hermosa</span>
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back bg-rose-600 text-white p-8 flex flex-col justify-center items-center text-center shadow-xl">
+                            <i class="fa-solid fa-quote-left text-3xl text-rose-300 mb-4"></i>
+                            <p class="font-serif-title text-xl italic leading-relaxed">
+                                "Eres la mezcla perfecta entre ternura, fuerza y alegría. Celebrar tus 20 años es el mayor de mis privilegios."
+                            </p>
+                            <span class="mt-6 font-handwriting text-2xl text-rose-200">— Siempre tuyo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 2 -->
+                <div class="flip-card h-[420px] w-full">
+                    <div class="flip-card-inner">
+                        <!-- Front -->
+                        <div class="flip-card-front bg-white p-4 shadow-xl border border-rose-100 flex flex-col justify-between">
+                            <div class="h-72 w-full overflow-hidden rounded-lg bg-gray-100">
+                                <img src="img/7B7CFAAB-BAF4-4FD0-B603-91DE8066571D.JPG" alt="Momento juntos" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80'">
+                            </div>
+                            <div class="text-center py-2">
+                                <span class="font-handwriting text-2xl text-rose-900">Tu Sonrisa Inigualable</span>
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back bg-rose-700 text-white p-8 flex flex-col justify-center items-center text-center shadow-xl">
+                            <i class="fa-solid fa-heart text-3xl text-rose-300 mb-4"></i>
+                            <p class="font-serif-title text-xl italic leading-relaxed">
+                                "Tu risa tiene la magia de cambiar cualquier día gris en el momento más bonito de la semana."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 3 -->
+                <div class="flip-card h-[420px] w-full">
+                    <div class="flip-card-inner">
+                        <!-- Front -->
+                        <div class="flip-card-front bg-white p-4 shadow-xl border border-rose-100 flex flex-col justify-between">
+                            <div class="h-72 w-full overflow-hidden rounded-lg bg-gray-100">
+                                <img src="img/PHOTO-2026-04-05-17-24-37.jpg" alt="Jugando en el parque" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=800&q=80'">
+                            </div>
+                            <div class="text-center py-2">
+                                <span class="font-handwriting text-2xl text-rose-900">Magali & Dariela</span>
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back bg-rose-600 text-white p-8 flex flex-col justify-center items-center text-center shadow-xl">
+                            <i class="fa-solid fa-sparkles text-3xl text-rose-300 mb-4"></i>
+                            <p class="font-serif-title text-xl italic leading-relaxed">
+                                "La familia y los momentos más puros se resumen en ustedes dos jugando bajo el sol."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN POEMA ESPECIAL -->
+    <section class="py-24 max-w-4xl mx-auto px-4 text-center">
+        <div class="bg-gradient-to-b from-rose-50 to-pink-100 p-8 md:p-16 rounded-3xl shadow-xl border border-rose-200 space-y-6 relative overflow-hidden">
+            <div class="absolute -top-6 -right-6 text-rose-200/50 text-9xl font-serif-title">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            
+            <i class="fa-solid fa-feather-pointed text-3xl text-rose-500"></i>
+            <h2 class="font-serif-title text-3xl md:text-4xl text-rose-950 font-bold">Un Poema Para Magali</h2>
+            
+            <div class="font-serif-title text-lg md:text-2xl text-rose-900/90 italic leading-relaxed space-y-4 max-w-2xl mx-auto py-4">
+                <p>Llegaste a mi vida sin previo aviso,<br>transformando una plática en un paraíso.</p>
+                <p>Hoy cumples veinte años de luz y dulzura,<br>de ser mamá ejemplar, de ternura pura.</p>
+                <p>Que la vida te devuelva multiplicado,<br>todo el amor que a tu paso has regalado.</p>
+            </div>
+
+            <div class="pt-4">
+                <span class="font-handwriting text-3xl text-rose-600 font-bold">Con todo mi amor</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER / CIERRE -->
+    <footer class="py-12 bg-rose-950 text-rose-200/80 text-center px-4 space-y-4">
+        <div class="flex justify-center items-center gap-2 text-rose-400 text-2xl">
+            <i class="fa-solid fa-heart animate-heartbeat"></i>
+        </div>
+        <p class="font-serif-title text-xl text-white">¡Feliz Cumpleaños Magali!</p>
+        <p class="text-xs text-rose-300/60">3 de Septiembre • Celebrando tus 20 años</p>
+    </footer>
+
+    <!-- MODAL PARA LAS CARTAS -->
+    <div id="letter-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white max-w-lg w-full rounded-3xl p-8 shadow-2xl border border-rose-100 space-y-6 transform transition-all scale-95 opacity-0 duration-300" id="modal-content">
+            <div class="flex justify-between items-center border-b border-rose-100 pb-4">
+                <h3 id="modal-title" class="font-serif-title text-2xl font-bold text-rose-950"></h3>
+                <button onclick="closeModal()" class="text-rose-400 hover:text-rose-600 text-2xl">&times;</button>
+            </div>
+            <p id="modal-body" class="text-rose-900/80 leading-relaxed text-lg font-light"></p>
+            <div class="text-right pt-4">
+                <button onclick="closeModal()" class="bg-rose-600 text-white px-6 py-2 rounded-full font-medium shadow-md hover:bg-rose-700 transition-colors">
+                    Cerrar con amor ❤️
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT DE INTERACTIVIDAD -->
+    <script>
+        // 1. Música de fondo toggle
+        const bgMusic = document.getElementById('bg-music');
+        const musicToggle = document.getElementById('music-toggle');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
+
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.classList.remove('fa-compact-disc', 'animate-spin');
+                musicIcon.classList.add('fa-music', 'animate-bounce');
+            } else {
+                bgMusic.play().catch(e => console.log('Audio autoplay prevented'));
+                musicIcon.classList.remove('fa-music', 'animate-bounce');
+                musicIcon.classList.add('fa-compact-disc', 'animate-spin');
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // 2. Modales para Cartas
+        const modalMessages = {
+            letter1: {
+                title: "¡Feliz Cumpleaños #20, Magali!",
+                body: "Hoy cumples 20 años y no puedo dejar de pensar en lo afortunado que me siento de caminar a tu lado. Gracias por tu sonrisa, por la hermosa mamá que eres para Dariela y por cada momento inolvidable. ¡Que este nuevo año de vida esté lleno de metas cumplidas y momentos mágicos!"
+            },
+            letter2: {
+                title: "Tu Sonrisa Es Mi Lugar Favorito",
+                body: "Cada vez que sonríes, todo a tu alrededor parece volverse más ligero y bonito. Nunca dejes de sonreír por nada ni por nadie, porque esa luz es única."
+            },
+            letter3: {
+                title: "Eres Una Mujer Increíble",
+                body: "Si estás teniendo un día cansado o difícil, recuerda que eres fuerte, capaz, hermosa e inteligente. Tienes un corazón de oro y estás construyendo un futuro hermoso para ti y para Dariela. ¡Estoy orgulloso de ti siempre!"
+            }
+        };
+
+        function openModal(key) {
+            const modal = document.getElementById('letter-modal');
+            const modalContent = document.getElementById('modal-content');
+            document.getElementById('modal-title').innerText = modalMessages[key].title;
+            document.getElementById('modal-body').innerText = modalMessages[key].body;
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('letter-modal');
+            const modalContent = document.getElementById('modal-content');
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // 3. Corazones flotantes en el fondo Canvas
+        const canvas = document.getElementById('hearts-canvas');
+        const ctx = canvas.getContext('2d');
+        let hearts = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Heart {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 12 + 8;
+                this.speedY = Math.random() * 1.5 + 0.5;
+                this.opacity = Math.random() * 0.5 + 0.3;
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < -20) {
+                    this.y = canvas.height + 20;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = '#ff85a1';
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.bezierCurveTo(this.x - this.size / 2, this.y - this.size / 2, this.x - this.size, this.y + this.size / 3, this.x, this.y + this.size);
+                ctx.bezierCurveTo(this.x + this.size, this.y + this.size / 3, this.x + this.size / 2, this.y - this.size / 2, this.x, this.y);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 25; i++) {
+            hearts.push(new Heart());
+        }
+
+        function animateHearts() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hearts.forEach(heart => {
+                heart.update();
+                heart.draw();
+            });
+            requestAnimationFrame(animateHearts);
+        }
+        animateHearts();
+    </script>
+</body>
+</html>
