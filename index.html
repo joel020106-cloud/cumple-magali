@@ -161,6 +161,19 @@
         @media (prefers-reduced-motion: reduce) {
             .animate-heartbeat, .animate-bounce, .animate-spin { animation: none !important; }
         }
+
+        /* Protección de contenido */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+        img {
+            pointer-events: none;
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
     </style>
 </head>
 <body class="relative">
@@ -730,6 +743,23 @@
             requestAnimationFrame(animateHearts);
         }
         animateHearts();
+    </script>
+
+    <script>
+        // Protección de contenido
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('dragstart', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            // Bloquear Ctrl+S, Ctrl+U, Ctrl+P, Ctrl+Shift+I, F12, PrintScreen
+            if (
+                (e.ctrlKey && ['s','u','p'].includes(e.key.toLowerCase())) ||
+                (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase())) ||
+                e.key === 'F12' ||
+                e.key === 'PrintScreen'
+            ) {
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>
